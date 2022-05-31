@@ -1,23 +1,18 @@
 #!/usr/bin/python3
-
-'''Task 07 - 7. Load, add, save'''
-
-
+"""
+script that adds all arguments to a Python list, and then save them to a file
+"""
 import sys
+import os
 
+save_to_json_file = __import__('5-save_to_json_file').save_to_json_file
+load_from_json_file = __import__('6-load_from_json_file').load_from_json_file
 
-save = __import__('5-save_to_json_file').save_to_json_file
-load = __import__('6-load_from_json_file').load_from_json_file
+templist = []
+filename = 'add_item.json'
+if os.path.exists(filename) is True:
+    templist = load_from_json_file(filename)
+for i in sys.argv[1:]:
+    templist.append(i)
 
-file = "add_item.json"
-
-try:
-    f = load(file)
-except:
-    f = []
-
-argc = len(sys.argv)
-for i in range(1, argc):
-    f.append(sys.argv[i])
-
-save(f, file)
+save_to_json_file(templist, filename)
